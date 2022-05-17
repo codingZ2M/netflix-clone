@@ -37,7 +37,7 @@ const Login = () => {
 export default Login
 
 const LoginContainer = tw.div`
-    h-screen w-full overflow-x-hidden flex justify-center bg-cover bg-center bg-no-repeat
+    h-screen w-full overflow-x-hidden flex justify-center bg-center bg-no-repeat object-cover
 `;
 const CTAContainer = tw.div`
     w-full sm:w-10/12 px-4 flex flex-col justify-center items-center z-10 pt-52 text-white

@@ -1,17 +1,39 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import Image from 'next/image'
 import signinBackground from '../public/images/signinBg.jpg'
 import tw from "tailwind-styled-components"
+import { useRouter } from "next/router"
+import {auth, provider, signInWithPopup, onAuthStateChanged} from '../firebase/Firebase'
 
 const Signin = () => {
+
+    const router = useRouter();
+
+    useEffect (  ()=> {
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                router.push(`/movies`)
+            }
+        }  )
+    },  );
+
+    const handleAuth = () => {
+        signInWithPopup(auth, provider).then( (result) => {
+          console.log(result);
+        router.push("/movies")
+          }).catch((error)=> {
+             alert(error.message);
+         })
+}
+
   return (
     <SigninContainer>
-    <Image 
+  <Image 
         src={signinBackground}
         layout='fixed'
         height={800}
         width={1600}
-        className="opacity-100 h-full w-full bg-top bg-cover bg-no-repeat z-10 object-cover"
+        className="opacity-100 object-cover"
      />
     <SigninBox>
         <Heading>Sign In</Heading>
@@ -21,7 +43,7 @@ const Signin = () => {
                 <Input type="text" placeholder="Password" required />
                 <SigninButton onClick="">Sign In</SigninButton>
                 <TextHelp>Need Help? </TextHelp>
-                <GoogleSigninButton onClick={()=>{}}>
+                <GoogleSigninButton  onClick={handleAuth} >
                     <Image src="/images/google.svg" alt="User" width={40} height={40}/>
                      Sign In with Google
                 </GoogleSigninButton>
@@ -39,7 +61,7 @@ const Signin = () => {
 export default Signin
 
 const SigninContainer = tw.div`
-    overflow-hidden relative flex w-full h-full items-center justify-center
+    overflow-hidden relative flex w-full h-full items-center justify-center 
 `;
 const SigninBox = tw.div`
     absolute top-20 opacity-80 bg-black w-10/12 sm:w-4/12 h-3/4 z-10  border-none

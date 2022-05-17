@@ -1,19 +1,55 @@
-import React from 'react'
+import { useEffect, useState } from "react"
 import tw from "tailwind-styled-components"
 import Image from 'next/image'
 import { useRouter } from "next/router"
+import {auth, onAuthStateChanged, signOut} from '../firebase/Firebase'
 
 const Header = () => {
     const router = useRouter();
+ 
+    const [signedUser, setSignedUser] = useState('');
+
+    useEffect (  ()=> {
+        onAuthStateChanged(auth, async (user) => {
+            if (user) {
+                setSignedUser(user);
+            }
+        }  )
+    }, []  );
+
+    const handleAuth = () => {
+        if (signedUser){
+           signOut(auth).then( ()=> {
+               router.push('/')
+              
+           }).catch((error)=> {
+               alert(error.message);
+           })
+       }
+       console.log(signedUser.photoURL)
+   }
+
   return (
     <div>
       <HeaderMenu>
         <Image src= "/images/netflix_logo.png"  alt="Netflix Logo" width= "155px" height="42px" />
-        <Button onClick={ ()=> router.push(`signin`) } >
-                Sign In</Button>
         
-        
+           { 
+                !signedUser ? 
+                    <Button onClick={ ()=> router.push(`signin`) } >
+                    Sign In</Button>
+                :
+                <>
+                <SignOut>
+                    <Image src={signedUser.photoURL} alt="User" className="rounded-full" width={40} height={40} />
+                    <SignOutBox>
+                       <span onClick={handleAuth} className="" >Sign Out</span>
+                    </SignOutBox>
+                </SignOut>
+                </>
+            }        
       </HeaderMenu>
+
     </div>
       
   )
