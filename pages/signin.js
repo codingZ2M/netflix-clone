@@ -30,10 +30,9 @@ const Signin = () => {
     <SigninContainer>
   <Image 
         src={signinBackground}
-        layout='fixed'
-        height={800}
-        width={1600}
-        className="opacity-100 object-cover"
+        layout="fill"
+                className="w-screen h-screen flex items-center object-cover"
+                alt="Background Image"
      />
     <SigninBox>
         <Heading>Sign In</Heading>
@@ -61,18 +60,18 @@ const Signin = () => {
 export default Signin
 
 const SigninContainer = tw.div`
-    overflow-hidden relative flex w-full h-full items-center justify-center 
+    flex w-full h-full items-center justify-center 
 `;
 const SigninBox = tw.div`
-    absolute top-20 opacity-80 bg-black w-10/12 sm:w-4/12 h-3/4 z-10  border-none
+    absolute top-20 opacity-80 bg-black  w-11/12 sm:w-4/12 h-4/5 z-10  border-none
 `;
 const Heading = tw.h1`
-    p-10 text-3xl
+    p-6 text-3xl text-white
 `;
 const FormContainer = tw.form``;
 
 const FormBox = tw.div`
-    flex flex-col items-center justify-center w-full mt-1'
+    flex flex-col items-center justify-center w-full mt-1
 `;
 
 const Input = tw.input`
