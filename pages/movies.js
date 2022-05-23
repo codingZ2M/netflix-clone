@@ -2,8 +2,10 @@ import React, {useEffect} from 'react'
 import Header from '../components/Header'
 import { useRouter } from "next/router"
 import {auth, onAuthStateChanged} from '../firebase/Firebase'
+import MovieAPIEndpoints from '../utils/MovieAPIEndpoints'
+import Collections from '../components/Collections'
 
-const movies = () => {
+const movies = ({collections}) => {
 
     const router = useRouter();
 
@@ -19,11 +21,22 @@ const movies = () => {
   return (
     <div>
         <Header/>
-        <div className='mt-32 pl-10 text-3xl'>
-        <h1> Here All The Movies Are Going To Be Displayed! Source: TMDB </h1>
-        </div>
+        <Collections collections={collections}  />
     </div>
   )
 }
 
 export default movies
+
+export async function getServerSideProps(context) {
+  const movieType = context.query.movieType
+  const request = await fetch(`https://api.themoviedb.org/3${
+                    MovieAPIEndpoints[movieType]?.url || MovieAPIEndpoints.UpcomingMovies.url
+                    }`
+                ).then( response => response.json());
+      return {
+        props: {
+          collections: request.results,
+        }
+      }
+}
