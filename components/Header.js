@@ -3,6 +3,7 @@ import tw from "tailwind-styled-components"
 import Image from 'next/image'
 import { useRouter } from "next/router"
 import {auth, onAuthStateChanged, signOut} from '../firebase/Firebase'
+import MovieCategoriesBar from './MovieCategoriesBar'
 
 const Header = () => {
     const router = useRouter();
@@ -46,6 +47,7 @@ const Header = () => {
                        <span onClick={handleAuth} className="" >Sign Out</span>
                     </SignOutBox>
                 </SignOut>
+                <MovieCategoriesBar/>
                 </>
             }        
       </HeaderMenu>

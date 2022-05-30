@@ -17,6 +17,6 @@ const Collections = ({collections}) => {
 export default Collections
 
 const CollectionsConatiner = tw.div`
-    px-3 mt-20  grid grid-cols-2  
+    px-3 mt-32  grid grid-cols-2  
     xl:grid-cols-4 lg:grid-cols-3
 `;
