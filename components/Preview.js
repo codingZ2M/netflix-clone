@@ -55,7 +55,7 @@ function Preview  ({ collection })  {
 export default Preview;
 
 const PreviewContainer = tw.div`
-    p-2 group cursor-pointer transition duration-200 
+    flex flex-col p-2 group cursor-pointer transition duration-200 
     ease-in sm:hover:scale-105
 `;
 
